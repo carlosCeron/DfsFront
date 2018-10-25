@@ -1,1 +1,20 @@
 /* You can add global styles to this file, and also import other style files */
+
+
+
+body{
+    background-color: #eaeaea;
+}
+
+/** Panel **/
+
+.panel-bg-primary{
+    background-color: #007bff;
+    color: white !important;
+    font-weight: bold !important;
+}
+
+
+.ui-paginator .ui-paginator-page, .ui-paginator .ui-paginator-pages, .ui-paginator .ui-paginator-next, .ui-paginator .ui-paginator-last, .ui-paginator .ui-paginator-first, .ui-paginator .ui-paginator-prev, .ui-paginator .ui-paginator-current {
+    line-height: none !important;
+}

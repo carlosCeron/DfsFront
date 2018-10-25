@@ -1,26 +1,96 @@
 
+<hr>
 <div class="ui-g">
-    <div class="ui-g-8"><h1>Listado de Productos</h1></div>
-    <div class="ui-g-4"><button pButton type="button" label="Primary" class="ui-button-raised"></button></div>
+    <div class="ui-g-12 ui-md-3 ui-md-offset-10">
+            <button pButton type="button" label="Crear Producto" class="ui-button-raised" (click)="newProduct()"></button>
+    </div>
 </div>
+<p-dataView #dv [value]="listadoProductos" [paginator]="true" [rows]="20" paginatorPosition="both" filterBy="pais" [sortField]="sortField"
+    [sortOrder]="sortOrder">
+    <p-header>
+        <div class="ui-helper-clearfix">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-4">
+                    <p-dropdown [options]="sortOptions" [(ngModel)]="sortKey" placeholder="Ordenar" (onChange)="onSortChange($event)" [autoWidth]="false"
+                        [style]="{'min-width':'15em'}"></p-dropdown>
+                </div>
+                <div class="ui-g-6 ui-md-4 filter-container">
+                    <div style="position:relative">
+                        <input type="search" pInputText placeholder="Buscar por nombre" (keyup)="dv.filter($event.target.value)">
+                    </div>
+                </div>
+                <div class="ui-g-6 ui-md-4" style="text-align:right">
+                    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                </div>
+            </div>
+        </div>
+    </p-header>
+    <ng-template let-product pTemplate="listItem">
+        <div class="ui-g" style="padding: 2em;border-bottom: 1px solid #d9d9d9">
+            <div class="ui-g-12 ui-md-3" style="text-align:center">
+                <img src="{{product.imagen}}" style="width: 100px;">
+            </div>
+            <div class="ui-g-12 ui-md-8 car-details">
+                <div class="ui-g">
+                    <div class="ui-g-2 ui-sm-6">Nombre: </div>
+                    <div class="ui-g-10 ui-sm-6">
+                        <b>{{product.nombre}}</b>
+                    </div>
 
-<div class="ui-g">
-    <div class="ui-g-4">
-            <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText> 
-                    <label for="float-input">Username</label>
-            </span>
+                    <div class="ui-g-2 ui-sm-6">País: </div>
+                    <div class="ui-g-10 ui-sm-6">
+                        <b>{{product.pais.name || product.pais}}</b>
+                    </div>
+
+                    <div class="ui-g-2 ui-sm-6">Precio: </div>
+                    <div class="ui-g-10 ui-sm-6">
+                        <b>${{product.precio}}</b>
+                    </div>
+
+                    <div class="ui-g-2 ui-sm-6">Unidades disponibles: </div>
+                    <div class="ui-g-10 ui-sm-6">
+                        <b>{{product.unidadDisponible}}</b>
+                    </div>
+
+                    <div class="ui-g-2 ui-sm-6">Unidades Vendidas: </div>
+                    <div class="ui-g-10 ui-sm-6">
+                        <b>{{product.unidadVendidas}}</b>
+                    </div>
+                </div>
+            </div>
+            <div class="ui-g-12 ui-md-1 search-icon">
+                <button pButton type="button" icon="pi pi-search" (click)="selectCar($event, car)"></button>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template let-product pTemplate="gridItem">
+        <div style="padding:.5em" class="ui-g-12 ui-md-3">
+            <p-panel [header]="product.nombre" [style]="{'text-align':'center'}">
+                    <img src="{{product.imagen}}" style="width: 100px;">
+                <div class="car-detail">{{product.pais.name || product.pais}} - {{product.precio}}</div>
+                <hr class="ui-widget-content" style="border-top:0">
+                <button pButton type="button" icon="pi pi-search" (click)="selectCar($event, car)" style="margin-top:0"></button>
+            </p-panel>
+        </div>
+    </ng-template>
+</p-dataView>
+
+<p-dialog header="Car Details" [(visible)]="displayDialog" [responsive]="true" showEffect="fade" [modal]="true" width="225"
+    (onAfterHide)="onDialogHide()">
+    <div class="ui-g" *ngIf="selectedCar">
+        <div class="ui-g-12" style="text-align:center">
+            <img src="assets/showcase/images/demo/car/{{selectedCar.brand}}.png">
+        </div>
+        <div class="ui-g-4">Vin: </div>
+        <div class="ui-g-8">{{selectedCar.vin}}</div>
+
+        <div class="ui-g-4">Brand: </div>
+        <div class="ui-g-8">{{selectedCar.brand}}</div>
+
+        <div class="ui-g-4">Year: </div>
+        <div class="ui-g-8">{{selectedCar.year}}</div>
+
+        <div class="ui-g-4">Color: </div>
+        <div class="ui-g-8">{{selectedCar.color}}</div>
     </div>
-    <div class="ui-g-4">
-            <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText> 
-                    <label for="float-input">Username</label>
-            </span>
-    </div>
-    <div class="ui-g-4">
-            <span class="ui-float-label">
-                    <input id="float-input" type="text" size="30" pInputText> 
-                    <label for="float-input">Username</label>
-            </span>
-    </div>
-</div>
+</p-dialog>

@@ -1,0 +1,65 @@
+<hr>
+
+
+<form #productoForm="ngForm" (ngSubmit)="onSubmit(productoForm)" >
+        <p-panel>
+                <p-header>
+                        <div class="ui-helper-clearfix">
+                                <span class="ui-panel-title" style="font-size:25px;display:inline-block;margin-top:2px;font-weight: bold;">Nuevo Producto</span>
+                                <button pButton type="button" icon="pi pi-arrow-left" label="Volver" class="ui-button-info" style="float: right" (click)="goBack()" ></button>
+                        </div>
+                </p-header>
+                <div class="ui-g">
+                        <div class="ui-g-4">
+                                <h5>Nombre:</h5>
+                                <input id="input" type="text" size="30" name="nombre" pInputText [(ngModel)]="producto.nombre">
+                        </div>
+                        <div class="ui-g-4">
+                                <h5>Correo Fabricante:</h5>
+                                <input id="input" type="text" size="30" name="correo"  pInputText [(ngModel)]="producto.correo">
+                        </div>
+                        <div class="ui-g-4">
+                                <h5>Precio producto:</h5>
+                                <div class="ui-inputgroup">
+                                        <span class="ui-inputgroup-addon">$</span>
+                                        <input type="text" name="precio" pInputText placeholder="Precio" [(ngModel)]="producto.precio">
+                                </div>
+                        </div>
+                </div>
+                <div class="ui-g">
+                        <div class="ui-g-4">
+                                <h5>País:</h5>
+                                <p-autoComplete [(ngModel)]="producto.pais" [ngModelOptions]="{standalone: true}" [suggestions]="filteredCountriesSingle" (completeMethod)="filterCountrySingle($event)"
+                                        field="name" [size]="30" placeholder="Selecciona País" [minLength]="1"></p-autoComplete>
+                        </div>
+                        <div class="ui-g-4">
+                                <h5>Fecha Lanzamiento:</h5>
+                                <p-calendar [(ngModel)]="producto.fecha" [locale]="es" [ngModelOptions]="{standalone: true}" dateFormat="dd/mm/yy"></p-calendar>
+                        </div>
+                        <div class="ui-g-4">
+                                <h5>Unidades disponibles:</h5>
+                                <input id="input" type="text" size="30" name="unidadesDisponibles" pInputText [(ngModel)]="producto.unidadDisponible">
+                        </div>
+                </div>
+                <div class="ui-g">
+                        <div class="ui-g-4">
+                                <h5>Unidades vendidas:</h5>
+                                <input id="input" type="text" size="30" name="unidadesVendidas" pInputText [(ngModel)]="producto.unidadVendidas">
+                        </div>
+                        <div class="ui-g-8">
+                                <h5>Imagen del producto:</h5>
+                                <input class="inputFile" type="file" (change)="startUpload($event.target.files)" style="border: none">
+                        </div>
+                </div>
+                <div class="ui-g">
+                        <div class="ui-g-12">
+                                <h5>Descripción:</h5>
+                                <textarea rows="5" cols="120" name="descripcion" pInputTextarea [(ngModel)]="producto.caracteristicas"></textarea>
+                        </div>
+                </div>
+                <p-footer>
+                        <button pButton type="submit" icon="pi pi-plus" label="Guardar" class="ui-button-info" style="margin-right: .25em"></button>
+                        <button pButton type="button" icon="pi pi-search" label="Cancelar" class="ui-button-danger" (click)="clean(productoForm)"></button>
+                </p-footer>
+        </p-panel>
+</form>
